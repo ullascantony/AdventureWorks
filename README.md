@@ -10,10 +10,10 @@ To develop a ReactJS Single Page Application with .NET backend and SQL Server da
 
 #### Features: ####
 
-* **Consume Microsoft AdventureWorks database.
-* **Use a custom dynamic ORM with ADO.Net. 
-* **Provide a RESTful API for UI to consume.
-* **Provide a Single Page Application UI for displaying results. 
+* Consume Microsoft AdventureWorks database.
+* Use a custom dynamic ORM with ADO.Net. 
+* Provide a RESTful API for UI to consume.
+* Provide a Single Page Application UI for displaying results. 
 
 
 #### Implementation: ####
