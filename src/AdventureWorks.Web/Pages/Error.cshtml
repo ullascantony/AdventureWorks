@@ -1,0 +1,56 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+<html lang="en" xml-lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>AdventureWorks | Error</title>
+</head>
+<body>
+    <div id="root">
+        <div class="site">
+            <header>
+                <nav class="navbar-site navbar-expand-sm navbar-toggleable-sm border-bottom mb-3 navbar navbar-light">
+                    <div class="container">
+                        AdventureWorks
+                    </div>
+                </nav>
+            </header>
+            <div class="container">
+                <div class="contents">
+                    <div class="row">
+                        <div class="col col-sm-12">
+                            <div class="card card-site card-site-dark">
+                                <div class="card-header">Error</div>
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <h2>An error occurred while processing your request.</h2>
+                                        @if (Model.ShowRequestId)
+                                        {
+                                            <strong>Request ID:</strong> <code>@Model.RequestId</code>
+                                        }
+                                        <h2>Development Mode</h2>
+                                        Swapping to the <strong>Development</strong> environment displays detailed information about the error that occurred.
+                                        <br />
+                                        <strong>The Development environment shouldn't be enabled for deployed applications.</strong>It can result in displaying sensitive information from exceptions to end users. For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong> and restarting the app.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-sm-12">
+                        <div class="copyright text-center">© 2020 UCA Software Solutions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
