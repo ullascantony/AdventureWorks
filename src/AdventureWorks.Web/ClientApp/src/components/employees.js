@@ -16,6 +16,7 @@ export class Employees extends Component {
     }
 
     componentDidMount() {
+        document.title = 'AdventureWorks | Employees';
         this.populateData(this.state.page);
     }
 
@@ -54,7 +55,7 @@ export class Employees extends Component {
         return (
             <nav aria-label="Pagination">
                 <ul className="pagination pagination-site">
-                    <li className={this.state.processing || this.state.page <= 1 ? 'page-item disabled' : 'page-item'} title="Go to first page">
+                    <li className={this.state.processing || this.state.page <= 1 ? 'page-item disabled' : 'page-item'} title={this.state.page > 1 ? 'Go to first page' : ''}>
                         <span className="page-link" onClick={(e) => { this.goToPage(e, 'first') }}>|&lt;&lt;</span>
                     </li>
                     <li className={this.state.processing || this.state.page <= 1 ? 'page-item disabled' : 'page-item'} title={this.state.page > 1 ? 'Go to page ' + (this.state.page - 1) : ''}>
@@ -63,7 +64,7 @@ export class Employees extends Component {
                     <li className={this.state.processing || this.state.page * this.rows >= this.state.records ? 'page-item disabled' : 'page-item'} title={this.state.page * this.rows < this.state.records ? 'Go to page ' + (this.state.page + 1) : ''}>
                         <span className="page-link" onClick={(e) => { this.goToPage(e, 'next') }}>&gt;&gt;</span>
                     </li>
-                    <li className={this.state.processing || this.state.page * this.rows >= this.state.records ? 'page-item disabled' : 'page-item'} title="Go to last page">
+                    <li className={this.state.processing || this.state.page * this.rows >= this.state.records ? 'page-item disabled' : 'page-item'} title={this.state.page * this.rows < this.state.records ? 'Go to last page' : ''}>
                         <span className="page-link" onClick={(e) => { this.goToPage(e, 'last') }}>&gt;&gt;|</span>
                     </li>
                 </ul>

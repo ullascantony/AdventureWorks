@@ -32,9 +32,19 @@ h2, .h2 {
     .navbar-site a.navbar-brand {
         color: #005fb2;
         font-weight: bold;
-        text-align: center;
-        white-space: normal;
-        word-break: break-all;
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+
+    .navbar-site .navbar-brand .navbar-brand-image {
+        height: 32px;
+        width: 32px
+    }
+
+    .navbar-site .navbar-brand .navbar-brand-text {
+        display: inline-block;
+        margin-left: .3em;
+        vertical-align: middle
     }
 
 .alert-site {

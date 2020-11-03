@@ -15,7 +15,7 @@ export class Layout extends Component {
                     </div>
                     <div className="row">
                         <div className="col col-sm-12">
-                            <div className="copyright text-center">&copy; 2020 UCA Software Solutions</div>
+                            <div className="copyright text-center">&copy; {new Date().getFullYear()} UCA Software Solutions</div>
                         </div>
                     </div>
                 </Container>
