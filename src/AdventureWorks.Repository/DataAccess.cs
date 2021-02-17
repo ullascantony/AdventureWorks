@@ -106,6 +106,21 @@ namespace AdventureWorks.Repository
                 commandType);
         }
 
+        public T ExecuteCommandReturn<T>(
+            string commandText,
+            List<KeyValuePair<string, object>> parameters,
+            string returnValueName,
+            bool isSqlStoredProc = false)
+        {
+            var commandType = isSqlStoredProc ? CommandType.StoredProcedure : CommandType.Text;
+
+            return ExecuteNonQueryReturn<T>(
+                commandText,
+                FromKeyValues(parameters),
+                returnValueName,
+                commandType);
+        }
+
         public bool BulkInsert<T>(
             IList<T> data,
             string tableName)
@@ -299,6 +314,44 @@ namespace AdventureWorks.Repository
             }
 
             return cmd.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// Execute database command and return specified return value
+        /// </summary>
+        /// <param name="commandText">Command text</param>
+        /// <param name="parameters">SQL parameter array</param>
+        /// <param name="returnValueName">Name of the return value parameter</param>
+        /// <param name="commandType">OPTIONAL Command type</param>
+        /// <returns>Affected row count</returns>
+        private T ExecuteNonQueryReturn<T>(
+            string commandText,
+            SqlParameter[] parameters,
+            string returnValueName,
+            CommandType commandType = CommandType.StoredProcedure)
+        {
+            using var con = _Context.GetConnection();
+            con.Open();
+
+            using var cmd = new SqlCommand(commandText, con)
+            {
+                CommandTimeout = _Context.SqlCommandTimeoutSeconds,
+                CommandType = commandType
+            };
+
+            foreach (var parameter in parameters)
+            {
+                if (parameter.Value == null)
+                {
+                    parameter.Value = DBNull.Value;
+                }
+            }
+
+            cmd.Parameters.AddRange(parameters);
+
+            _ = cmd.ExecuteNonQuery();
+
+            return (T)cmd.Parameters[returnValueName].Value;
         }
 
         /// <summary>

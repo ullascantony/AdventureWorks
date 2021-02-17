@@ -62,6 +62,20 @@ namespace AdventureWorks.Repository
             bool isSqlStoredProc = false);
 
         /// <summary>
+        /// Execute database command and return return specified return value
+        /// </summary>
+        /// <param name="commandText">Command text</param>
+        /// <param name="parameters">Parameter list</param>
+        /// <param name="returnValueName">Name of the return value parameter</param>
+        /// <param name="isSqlStoredProc">OPTIONAL flag when command is stored procedure</param>
+        /// <returns>Affected row count</returns>
+        T ExecuteCommandReturn<T>(
+            string commandText,
+            List<KeyValuePair<string, object>> parameters,
+            string returnValueName,
+            bool isSqlStoredProc = false);
+
+        /// <summary>
         /// Bulk insert data into database
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
