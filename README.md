@@ -19,15 +19,15 @@ To develop a ReactJS Single Page Application with .NET backend and SQL Server da
 #### Implementation: ####
 
 * Uses ASP.NET Core 3.1 framework and C# programming language
-* Uses React JS 17.0.1 for UI SPA
-* Uses Node JS 14.8.0 for JavaScript package management
+* Uses React JS 17.0.2 for UI SPA
+* Uses Node JS 16.0.0 for JavaScript package management
 * Uses Visual Studio 2019 in-built templates for all projects
 * Uses MS SQL Server as the data persistence mechanism
 * Uses AdventureWorks sample database as data source
 * Uses Microsoft Extensions Dependency Injection
 * Uses Microsoft Text Serialization libraries as recommended
 * API conforms to RESTful and Micro-services patterns
-* UI uses Bootstrap 4.5 for responsiveness
+* UI uses Bootstrap 4.6 for responsiveness
 * Solution is designed to support Scalability and Testability
 * HTTP actions support processing multiple parallel requests
 
