@@ -100,7 +100,6 @@ h2, .h2 {
 .contents .table-container {
     background: #fff;
     overflow-x: auto;
-    margin-bottom: .1em;
 }
 
 .contents .table-site thead tr {
@@ -118,16 +117,10 @@ h2, .h2 {
 
 .contents .pagination-site {
     float: left;
+    font-size: .75em;
+    font-weight: bold;
     margin-bottom: 0;
 }
-
-    .contents .pagination-site .page-item.disabled {
-        cursor: default;
-    }
-
-        .contents .pagination-site .page-item.disabled .page-link {
-            background: #eee;
-        }
 
     .contents .pagination-site .page-item {
         cursor: pointer;
@@ -135,16 +128,37 @@ h2, .h2 {
 
         .contents .pagination-site .page-item .page-link {
             color: #030306;
+            line-height: 1;
         }
 
             .contents .pagination-site .page-item .page-link:hover {
-                color: #0056b3;
                 background-color: rgba(0, 95, 178, 0.05);
+                color: #0056b3;
             }
 
-.contents .pagination-descripton {
+        .contents .pagination-site .page-item.current {
+            cursor: default;
+        }
+
+            .contents .pagination-site .page-item.current .page-link,
+            .contents .pagination-site .page-item.current .page-link:active,
+            .contents .pagination-site .page-item.current .page-link:hover {
+                background-color: rgba(0, 95, 178, 0.25);
+                color: #030306;
+            }
+
+        .contents .pagination-site .page-item.disabled {
+            cursor: default;
+        }
+
+            .contents .pagination-site .page-item.disabled .page-link {
+                background: #eee;
+                color: #babdb0;
+            }
+
+.contents .pagination-summary {
     float: right;
-    line-height: 2.5;
+    font-size: .8em;
 }
 
 .copyright {

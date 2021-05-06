@@ -5,19 +5,115 @@ export class Employees extends Component {
 
     constructor(props) {
         super(props);
-        this.rows = 10;
         this.state = {
             employees: [],
             processing: true,
-            page: 1,
-            records: 0,
-            pagerDesc: ''
+            pager: {
+                totalItems: 0,
+                currentPage: 0,
+                pageSize: 10,
+                totalPages: 0,
+                startPage: 0,
+                endPage: 0,
+                startIndex: 0,
+                endIndex: 0,
+                pages: [],
+                pagerSummary: ''
+            }
         };
     }
 
     componentDidMount() {
         document.title = 'AdventureWorks | Employees';
-        this.populateData(this.state.page);
+        this.populateData(1);
+    }
+
+    getRange(start, end, step) {
+        const range = [];
+        if (step === null || typeof (step) === 'undefined') {
+            step = 1;
+        }
+        if (end < start) {
+            step = -step;
+        }
+        while (step > 0 ? end >= start : end <= start) {
+            range.push(start);
+            start += step;
+        }
+        return range;
+    }
+
+    getPager(totalItems, currentPage = 1, pageSize = 10, typeName = 'row', typeNamePlural = 'rows') {
+        // Calculate total pages
+        const totalPages = Math.ceil(totalItems / pageSize);
+
+        var startPage = 0, endPage = 0;
+
+        if (totalPages <= 10) {
+            // Less than 10 total pages so show all
+            startPage = 1;
+            endPage = totalPages;
+        } else {
+            // More than 10 total pages so calculate start and end pages
+            if (currentPage <= 6) {
+                startPage = 1;
+                endPage = 10;
+            } else if (currentPage + 4 >= totalPages) {
+                startPage = totalPages - 9;
+                endPage = totalPages;
+            } else {
+                startPage = currentPage - 5;
+                endPage = currentPage + 4;
+            }
+        }
+
+        // Calculate start and end item indexes
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+
+        // Create an array of available pages
+        const pages = this.getRange(startPage, endPage, 1);
+
+        // Compose pager summary
+        let pagerSummary = (startIndex + 1) + ' ';
+        pagerSummary += ((startIndex + 1) !== (endIndex + 1) ? 'to' : '') + ' ';
+        pagerSummary += ((startIndex + 1) !== (endIndex + 1) ? (endIndex + 1 + '') : '') + ' ';
+        pagerSummary += 'of ' + totalItems + ' ' + (totalItems === 1 ? typeName : typeNamePlural);
+
+        return {
+            totalItems: totalItems,
+            currentPage: currentPage,
+            pageSize: pageSize,
+            totalPages: totalPages,
+            startPage: startPage,
+            endPage: endPage,
+            startIndex: startIndex,
+            endIndex: endIndex,
+            pages: pages,
+            pagerSummary: pagerSummary
+        };
+    }
+
+    goToPage(e, page) {
+        if (e) {
+            e.preventDefault();
+        }
+        this.populateData(page);
+    }
+
+    async populateData(page) {
+        const url = 'api/employee/getall/' + this.state.pager.pageSize + '/' + (page - 1);
+        const response = await fetch(url);
+        const data = await response.json();
+        if (Array.isArray(data) && data.length) {
+            let records = data.map(emp => emp.ResultCount)[0];
+            const pager = this.getPager(records, page, this.state.pager.pageSize, 'employee', 'employees');
+            this.setState({
+                employees: data,
+                processing: false,
+                pager: pager
+            });
+        }
     }
 
     renderTable() {
@@ -54,21 +150,26 @@ export class Employees extends Component {
     renderPaging() {
         return (
             <nav aria-label="Pagination">
-                <ul className="pagination pagination-site">
-                    <li className={this.state.processing || this.state.page <= 1 ? 'page-item disabled' : 'page-item'} title={this.state.page > 1 ? 'Go to first page' : ''}>
-                        <span className="page-link" onClick={(e) => { this.goToPage(e, 'first') }}>|&lt;&lt;</span>
+                <ul className="pagination pagination-site" role="navigation">
+                    <li className={this.state.processing || this.state.pager.currentPage <= 1 ? 'page-item disabled' : 'page-item'} title={this.state.pager.currentPage > 1 ? 'Go to first page' : ''}>
+                        <span className="page-link" onClick={(e) => { this.goToPage(e, 1) }}>|&lt;</span>
                     </li>
-                    <li className={this.state.processing || this.state.page <= 1 ? 'page-item disabled' : 'page-item'} title={this.state.page > 1 ? 'Go to page ' + (this.state.page - 1) : ''}>
-                        <span className="page-link" onClick={(e) => { this.goToPage(e, 'prev') }}>&lt;&lt;</span>
+                    <li className={this.state.processing || this.state.pager.currentPage <= 1 ? 'page-item disabled' : 'page-item'} title={this.state.pager.currentPage > 1 ? 'Go to previous page (' + (this.state.pager.currentPage - 1) + ')' : ''}>
+                        <span className="page-link" onClick={(e) => { this.goToPage(e, this.state.pager.currentPage - 1) }}>&lt;&lt;</span>
                     </li>
-                    <li className={this.state.processing || this.state.page * this.rows >= this.state.records ? 'page-item disabled' : 'page-item'} title={this.state.page * this.rows < this.state.records ? 'Go to page ' + (this.state.page + 1) : ''}>
-                        <span className="page-link" onClick={(e) => { this.goToPage(e, 'next') }}>&gt;&gt;</span>
+                    {this.state.pager.pages.map(page =>
+                        <li key={page} className={this.state.processing || this.state.pager.currentPage === page ? 'page-item current' : 'page-item'} title={this.state.pager.currentPage !== page ? 'Go to page ' + page : 'Current page is ' + page}>
+                            <span className="page-link" onClick={(e) => { this.goToPage(e, page) }}>{page}</span>
+                        </li>
+                    )}
+                    <li className={this.state.processing || this.state.pager.currentPage >= this.state.pager.totalPages ? 'page-item disabled' : 'page-item'} title={this.state.pager.currentPage < this.state.pager.totalPages ? 'Go to next page (' + (this.state.pager.currentPage + 1) + ')' : ''}>
+                        <span className="page-link" onClick={(e) => { this.goToPage(e, this.state.pager.currentPage + 1) }}>&gt;&gt;</span>
                     </li>
-                    <li className={this.state.processing || this.state.page * this.rows >= this.state.records ? 'page-item disabled' : 'page-item'} title={this.state.page * this.rows < this.state.records ? 'Go to last page' : ''}>
-                        <span className="page-link" onClick={(e) => { this.goToPage(e, 'last') }}>&gt;&gt;|</span>
+                    <li className={this.state.processing || this.state.pager.currentPage >= this.state.pager.totalPages ? 'page-item disabled' : 'page-item'} title={this.state.pager.currentPage < this.state.pager.totalPages ? 'Go to last page (' + (this.state.pager.totalPages + 1) + ')' : ''}>
+                        <span className="page-link" onClick={(e) => { this.goToPage(e, this.state.pager.totalPages) }}>&gt;|</span>
                     </li>
                 </ul>
-                <span className="pagination-descripton" title={'Showing ' + this.state.pagerDesc + ' records'}>{this.state.pagerDesc}</span>
+                <span className="pagination-summary" title={this.state.pager.pagerSummary}>{this.state.pager.pagerSummary}</span>
             </nav>
         );
     }
@@ -97,45 +198,5 @@ export class Employees extends Component {
                 </div>
             </div>
         );
-    }
-
-    goToPage(e, direction) {
-        if (e) {
-            e.preventDefault();
-        }
-        var page = this.state.page;
-        if (direction === 'first' && page > 1) {
-            page = 1;
-            this.populateData(page);
-        }
-        else if (direction === 'prev' && page > 1) {
-            page--;
-            this.populateData(page);
-        }
-        else if (direction === 'next' && page * this.rows < this.state.records) {
-            page++;
-            this.populateData(page);
-        }
-        else if (direction === 'last' && page * this.rows < this.state.records) {
-            page = Math.floor(this.state.records / this.rows);
-            this.populateData(page);
-        }
-    }
-
-    async populateData(page) {
-        var url = 'api/employee/getall/' + this.rows + '/' + (page - 1);
-        const response = await fetch(url);
-        const data = await response.json();
-        if (Array.isArray(data) && data.length) {
-            let records = data.map(emp => emp.ResultCount)[0];
-            let pagerDesc = (((page - 1) * this.rows) + 1) + ' to ' + (page * this.rows) + ' of ' + records;
-            this.setState({
-                employees: data,
-                processing: false,
-                records: records,
-                page: page,
-                pagerDesc: pagerDesc
-            });
-        }
     }
 }

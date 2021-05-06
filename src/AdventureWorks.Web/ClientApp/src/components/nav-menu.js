@@ -26,8 +26,8 @@ export class NavMenu extends Component {
                 <Navbar className="navbar-site navbar-expand-sm navbar-toggleable-sm border-bottom mb-3" light>
                     <Container>
                         <NavbarBrand tag={Link} to="/">
-                            <img class="navbar-brand-image" src="./favicon.ico" />
-                            <span class="navbar-brand-text">AdventureWorks</span>
+                            <img alt="" className="navbar-brand-image" src="./favicon.ico" />
+                            <span className="navbar-brand-text">AdventureWorks</span>
                         </NavbarBrand>
                         <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
