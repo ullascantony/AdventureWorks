@@ -100,7 +100,12 @@ h2, .h2 {
 .contents .table-container {
     background: #fff;
     overflow-x: auto;
+    margin-bottom: .5rem;
 }
+
+    .contents .table-container .table {
+        margin-bottom: 0;
+    }
 
 .contents .table-site thead tr {
     background-color: rgba(0, 95, 178, 0.25);
@@ -113,6 +118,10 @@ h2, .h2 {
 
 .contents .table-site tbody tr:nth-of-type(even) {
     background-color: rgba(0, 95, 178, 0.05);
+}
+
+.contents .table-site tbody tr:last-of-type {
+    border-bottom: 1px solid #dee2e6;
 }
 
 .contents .pagination-site {

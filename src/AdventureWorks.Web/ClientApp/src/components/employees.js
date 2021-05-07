@@ -165,7 +165,7 @@ export class Employees extends Component {
                     <li className={this.state.processing || this.state.pager.currentPage >= this.state.pager.totalPages ? 'page-item disabled' : 'page-item'} title={this.state.pager.currentPage < this.state.pager.totalPages ? 'Go to next page (' + (this.state.pager.currentPage + 1) + ')' : ''}>
                         <span className="page-link" onClick={(e) => { this.goToPage(e, this.state.pager.currentPage + 1) }}>&gt;&gt;</span>
                     </li>
-                    <li className={this.state.processing || this.state.pager.currentPage >= this.state.pager.totalPages ? 'page-item disabled' : 'page-item'} title={this.state.pager.currentPage < this.state.pager.totalPages ? 'Go to last page (' + (this.state.pager.totalPages + 1) + ')' : ''}>
+                    <li className={this.state.processing || this.state.pager.currentPage >= this.state.pager.totalPages ? 'page-item disabled' : 'page-item'} title={this.state.pager.currentPage < this.state.pager.totalPages ? 'Go to last page (' + (this.state.pager.totalPages) + ')' : ''}>
                         <span className="page-link" onClick={(e) => { this.goToPage(e, this.state.pager.totalPages) }}>&gt;|</span>
                     </li>
                 </ul>
