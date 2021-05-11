@@ -138,6 +138,8 @@ h2, .h2 {
         .contents .pagination-site .page-item .page-link {
             color: #030306;
             line-height: 1;
+            padding: .65em .85em .65em .85em;
+            word-break: normal;
         }
 
             .contents .pagination-site .page-item .page-link:hover {
@@ -168,6 +170,7 @@ h2, .h2 {
 .contents .pagination-summary {
     float: right;
     font-size: .8em;
+    margin-top: .25em;
 }
 
 .copyright {
