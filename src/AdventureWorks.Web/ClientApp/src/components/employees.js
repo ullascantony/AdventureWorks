@@ -119,7 +119,7 @@ export class Employees extends Component {
     renderTable() {
         return (
             <div className="table-container">
-                <table className='table table-site table-striped' aria-labelledby="table-label">
+                <table className='table table-site' aria-labelledby="table-label">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -185,7 +185,7 @@ export class Employees extends Component {
 
         return (
             <div className="row">
-                <div className="col col-sm-12">
+                <div className="col-sm-12">
                     <div className="card card-site card-site-dark">
                         <div className="card-header">Employees</div>
                         <div className="card-body">

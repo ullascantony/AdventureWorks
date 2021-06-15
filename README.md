@@ -27,7 +27,7 @@ To develop a ReactJS Single Page Application with .NET backend and SQL Server da
 * Uses Microsoft Extensions Dependency Injection
 * Uses Microsoft Text Serialization libraries as recommended
 * API conforms to RESTful and Micro-services patterns
-* UI uses Bootstrap 4.6 for responsiveness
+* UI uses Bootstrap 5 for responsiveness
 * Solution is designed to support Scalability and Testability
 * HTTP actions support processing multiple parallel requests
 

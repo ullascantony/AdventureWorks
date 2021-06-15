@@ -14,7 +14,7 @@ export class Layout extends Component {
                         {this.props.children}
                     </div>
                     <div className="row">
-                        <div className="col col-sm-12">
+                        <div className="col-sm-12">
                             <div className="copyright text-center">&copy; {new Date().getFullYear()} UCA Software Solutions</div>
                         </div>
                     </div>

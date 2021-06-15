@@ -10,7 +10,7 @@ export class Home extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col col-sm-12">
+                <div className="col-sm-12">
                     <div className="card card-site card-site-dark">
                         <div className="card-header">React SPA</div>
                         <div className="card-body">
