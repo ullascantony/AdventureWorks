@@ -30,6 +30,7 @@
     --font-weight-semi: normal;
     --size-none: 0;
     --size-min: .15em;
+    --size-near-quart: .2em;
     --size-quart: .25em;
     --size-near-half: .4em;
     --size-half: .5em;
@@ -104,7 +105,7 @@ code {
 
         .contents .card-site .card-header:first-child {
             border-radius: var(--size-near-half) var(--size-near-half) var(--size-none) var(--size-none);
-            text-shadow: var(--size-quart) var(--size-quart) var(--size-min) var(--color-text-shadow);
+            text-shadow: var(--size-near-quart) var(--size-near-quart) var(--size-min) var(--color-text-shadow);
         }
 
     .contents .card-site .card-body {
@@ -128,22 +129,20 @@ code {
 
     .contents .table-site thead tr {
         background-color: var(--color-site-main-medium);
-        border-bottom: .2em solid var(--color-site-main-dark);
+        border-bottom: var(--size-min) solid var(--color-site-main-dark);
     }
 
     .contents .table-site tbody tr:nth-of-type(odd) {
-        background-color: var(--color-white) !important;
+        background-color: var(--color-white);
     }
 
     .contents .table-site tbody tr:nth-of-type(even) {
-        background-color: var(--color-site-main-light) !important;
+        background-color: var(--color-site-main-light);
     }
 
 .contents .pagination-site {
     float: left;
-    font-size: var(--size-3quart);
-    font-weight: var(--font-weight-full);
-    margin-bottom: var(--size-none);
+    margin: var(--size-min) var(--size-none);
 }
 
     .contents .pagination-site .page-item {
@@ -152,9 +151,10 @@ code {
 
         .contents .pagination-site .page-item .page-link {
             color: var(--color-site-main-text-dark);
-            line-height: 1;
-            padding: var(--size-near-3quart) var(--size-3quart) var(--size-near-3quart) var(--size-3quart);
-            word-break: keep-all;
+            font-size: var(--size-near-full);
+            font-weight: var(--font-weight-full);
+            padding: var(--size-quart) var(--size-half) var(--size-quart) var(--size-half);
+            white-space: nowrap;
         }
 
             .contents .pagination-site .page-item .page-link:hover {
@@ -166,8 +166,8 @@ code {
         .contents .pagination-site .page-item.current .page-link,
         .contents .pagination-site .page-item.current .page-link:active,
         .contents .pagination-site .page-item.current .page-link:hover {
-            background-color: var(--color-site-main-medium);
-            color: var(--color-site-main-text-dark);
+            background-color: var(--color-site-main-dark);
+            color: var(--color-white);
             cursor: default;
         }
 
@@ -218,16 +218,17 @@ code {
             li.nav-item a.nav-link.active {
                 background-color: var(--color-site-main-medium);
                 border: 1px solid var(--color-site-main-dark);
+                cursor: default;
             }
 }
 
 @media (max-width: 575px) {
     .navbar-site a.navbar-brand {
-        margin-left: var(--size-quart) !important;
+        margin-left: var(--size-quart)
     }
 
     .navbar-site .navbar-collapse {
-        margin-left: var(--size-half) !important;
+        margin-left: var(--size-half);
     }
 
     .navbar-site .navbar-toggler {
