@@ -24,6 +24,8 @@
     --color-site-main-text-dark: #030306;
     --color-site-header: #002f6a;
     --color-site-button: #7952b3;
+    --font-site: Rajdhani, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-site-bold: RajdhaniBold, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-size-base: 14px;
     --font-size-step: 16px;
     --font-weight-full: bold;
@@ -43,12 +45,27 @@
     --size-double: 2em;
 }
 
+@font-face {
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: normal;
+    src: local('Rajdhani Medium'), local('Rajdhani-Medium'), url(fonts/Rajdhani-Medium.woff) format('woff');
+}
+
+@font-face {
+    font-family: RajdhaniBold;
+    font-style: normal;
+    font-weight: normal;
+    src: local('Rajdhani Bold'), local('Rajdhani-Bold'), url(fonts/Rajdhani-Bold.woff) format('woff');
+}
+
 html {
     font-size: var(--font-size-base);
 }
 
 body {
     background: var(--color-gray-light);
+    font-family: var(--font-site);
 }
 
 a {
@@ -57,6 +74,7 @@ a {
 
 h2, .h2 {
     color: var(--color-site-header);
+    font-family: var(--font-site-bold);
     font-size: var(--size-full-quart);
 }
 
@@ -83,6 +101,9 @@ code {
 
     .navbar-site .navbar-brand .navbar-brand-text {
         display: inline-block;
+        font-family: var(--font-site-bold);
+        font-size: var(--size-full-quart);
+        font-weight: var(--font-weight-semi);
         margin-left: var(--size-half);
         vertical-align: middle
     }
@@ -115,6 +136,8 @@ code {
 .contents .card-site-dark .card-header {
     background-color: var(--color-site-main-dark);
     color: var(--color-white);
+    font-family: var(--font-site-bold);
+    font-weight: var(--font-weight-semi);
 }
 
 .contents .table-container {
@@ -195,6 +218,12 @@ code {
     font-size: var(--size-3quart);
     margin-bottom: var(--size-full);
     margin-top: var(--size-none);
+}
+
+@media (min-width: 1400px) {
+    .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: calc(100vw - 18%);
+    }
 }
 
 @media (min-width: 576px) {
