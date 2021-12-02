@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 using AdventureWorks.Domain.Entity;
 using AdventureWorks.Domain.Interfaces;
 
 namespace AdventureWorks.Web.Controllers
 {
+    /// <summary>
+    /// Manage Person data
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
         #region Members
+
+        private readonly ILogger<PersonController> _Logger;
 
         private readonly IPersonRepository _PersonRepository;
 
@@ -20,14 +26,17 @@ namespace AdventureWorks.Web.Controllers
 
         #region Constructor
 
-        public PersonController(IPersonRepository personRepository)
+        public PersonController(
+            ILogger<PersonController> logger,
+            IPersonRepository personRepository)
         {
+            _Logger = logger;
             _PersonRepository = personRepository;
         }
 
         #endregion
 
-        #region Actions
+        #region Action methods
 
         /// <summary>
         /// Get all Persons
@@ -42,6 +51,8 @@ namespace AdventureWorks.Web.Controllers
         {
             try
             {
+                _Logger.LogInformation("Person controller: Get All action invoked.");
+
                 IEnumerable<Person> result = null;
 
                 await Task.Run(() =>
@@ -69,6 +80,8 @@ namespace AdventureWorks.Web.Controllers
         {
             try
             {
+                _Logger.LogInformation("Person controller: Get action invoked.");
+
                 Person result = null;
 
                 await Task.Run(() =>

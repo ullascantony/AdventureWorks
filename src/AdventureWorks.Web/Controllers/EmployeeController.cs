@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 using AdventureWorks.Domain.Interfaces;
 
 namespace AdventureWorks.Web.Controllers
 {
+    /// <summary>
+    /// Manage Employee data
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class EmployeeController : ControllerBase
     {
         #region Members
+
+        private readonly ILogger<EmployeeController> _Logger;
 
         private readonly IEmployeeRepository _EmployeeRepository;
 
@@ -20,14 +26,17 @@ namespace AdventureWorks.Web.Controllers
 
         #region Constructor
 
-        public EmployeeController(IEmployeeRepository employeeRepository)
+        public EmployeeController(
+            ILogger<EmployeeController> logger,
+            IEmployeeRepository employeeRepository)
         {
+            _Logger = logger;
             _EmployeeRepository = employeeRepository;
         }
 
         #endregion
 
-        #region Actions
+        #region Action methods
 
         /// <summary>
         /// Get all Employees
@@ -42,6 +51,8 @@ namespace AdventureWorks.Web.Controllers
         {
             try
             {
+                _Logger.LogInformation("Employee controller: Get All action invoked.");
+
                 IEnumerable<ExpandoObject> result = null;
 
                 await Task.Run(() =>
@@ -69,6 +80,8 @@ namespace AdventureWorks.Web.Controllers
         {
             try
             {
+                _Logger.LogInformation("Employee controller: Get action invoked.");
+
                 ExpandoObject result = null;
 
                 await Task.Run(() =>

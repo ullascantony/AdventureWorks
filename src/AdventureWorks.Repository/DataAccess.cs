@@ -21,6 +21,7 @@ namespace AdventureWorks.Repository
         /// <summary>
         /// Default constructor
         /// </summary>
+        /// <param name="context">Database Context instance</param>
         public DataAccess(IDatabaseContext context)
         {
             _Context = context;

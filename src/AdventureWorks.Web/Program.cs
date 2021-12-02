@@ -10,7 +10,15 @@ namespace AdventureWorks.Web
     {
         #region Members
 
-        public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+        /// <summary>
+        /// Create Host Builder
+        /// </summary>
+        /// <param name="args">Arguments</param>
+        /// <returns>Host Builder instance</returns>
+        public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        });
 
         #endregion
 

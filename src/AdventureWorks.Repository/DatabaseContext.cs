@@ -10,8 +10,8 @@ namespace AdventureWorks.Repository
         private const string Connection_Strings = "ConnectionStrings";
         private const string App_Settings = "AppSettings";
         private const string Base_Connection = "BaseConnection";
-        private const string SQL_Command_TimeoutSeconds = "Sql.Command.TimeoutSeconds";
-        private const string SQL_BulkInsert_BatchSize = "Sql.BulkInsert.BatchSize";
+        private const string SQL_Command_TimeoutSeconds = "SQL.Command.TimeoutSeconds";
+        private const string SQL_BulkInsert_BatchSize = "SQL.BulkInsert.BatchSize";
 
         #endregion
 
@@ -34,6 +34,7 @@ namespace AdventureWorks.Repository
         /// <summary>
         /// Default constructor
         /// </summary>
+        /// <param name="configuration">Configuration data</param>
         public DatabaseContext(IConfiguration configuration)
         {
             Configuration = configuration;

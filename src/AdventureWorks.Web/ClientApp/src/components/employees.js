@@ -28,6 +28,13 @@ export class Employees extends Component {
         this.populateData(1);
     }
 
+    getNewGuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
     getRange(start, end, step) {
         const range = [];
         if (step === null || typeof (step) === 'undefined') {
@@ -103,7 +110,11 @@ export class Employees extends Component {
 
     async populateData(page) {
         const url = 'api/employee/getall/' + this.state.pager.pageSize + '/' + (page - 1);
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: {
+                'CorrelationID': this.getNewGuid()
+            }
+        });
         const data = await response.json();
         if (Array.isArray(data) && data.length) {
             let records = data.map(emp => emp.ResultCount)[0];

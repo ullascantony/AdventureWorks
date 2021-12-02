@@ -62,7 +62,7 @@ namespace AdventureWorks.Repository
             bool isSqlStoredProc = false);
 
         /// <summary>
-        /// Execute database command and return return specified return value
+        /// Execute database command and return specified return value
         /// </summary>
         /// <param name="commandText">Command text</param>
         /// <param name="parameters">Parameter list</param>

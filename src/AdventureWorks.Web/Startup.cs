@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,12 +6,16 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using AdventureWorks.Domain.Interfaces;
 using AdventureWorks.Repository;
 
 namespace AdventureWorks.Web
 {
+    /// <summary>
+    /// Startup logic
+    /// </summary>
     public class Startup
     {
         #region Properties
@@ -76,8 +81,11 @@ namespace AdventureWorks.Web
         /// </summary>
         /// <param name="app">Application builder</param>
         /// <param name="env">Hosting environment</param>
-        /// <param name="loggerFactory">Logger factory</param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        /// <param name="logger">Logger factory</param>
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            ILoggerFactory logger)
         {
             if (env.IsDevelopment())
             {
@@ -89,6 +97,9 @@ namespace AdventureWorks.Web
                 app.UseHsts(); // The default HSTS value is 30 days.
             }
 
+            // Add file logging
+            logger.AddFile(Configuration.GetSection("AppSettings").GetSection("Log.File").Value.Trim());
+
             // Enable default HTTPS redirection when available
             app.UseHttpsRedirection();
 
@@ -99,13 +110,13 @@ namespace AdventureWorks.Web
             // Add URL based routing capabilities
             app.UseRouting();
 
-            // Enable authorization capabilities
+            // Authorize resources
             app.UseAuthorization();
 
             // Enable options to use the default served file
             app.UseDefaultFiles();
 
-            // Add endpoints to controller actions
+            // Add automatic endpoints to controller actions
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -121,6 +132,7 @@ namespace AdventureWorks.Web
                 if (env.IsDevelopment())
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
+                    spa.Options.StartupTimeout = TimeSpan.FromSeconds(120);
                 }
             });
         }
