@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using AdventureWorks.Domain.Interfaces;
 using AdventureWorks.Repository;
 
 namespace AdventureWorks.Web
@@ -55,11 +54,7 @@ namespace AdventureWorks.Web
             services.AddSingleton(Configuration);
 
             // Add custom services
-            services
-                .AddTransient<IDatabaseContext, DatabaseContext>()
-                .AddTransient<IDataAccess, DataAccess>()
-                .AddTransient<IPersonRepository, PersonRepository>()
-                .AddTransient<IEmployeeRepository, EmployeeRepository>();
+            DependencyExtensions.Register(services);
 
             // Add services for controllers with JSON serialization options
             services.AddControllers().AddJsonOptions(options =>
