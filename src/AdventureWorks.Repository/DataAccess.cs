@@ -403,28 +403,36 @@ namespace AdventureWorks.Repository
                 foreach (DataRow row in data.Rows)
                 {
                     Type temp = typeof(T);
-                    T obj = Activator.CreateInstance<T>();
-
-                    var cols = row.Table.Columns;
-                    foreach (DataColumn col in cols)
+                    if (temp == typeof(string))
                     {
-                        var props = temp.GetProperties();
-                        foreach (var prop in props)
+                        var value = row[0];
+                        collection.Add((T)Convert.ChangeType(value == DBNull.Value ? null : value, temp));
+                    }
+                    else
+                    {
+                        T obj = Activator.CreateInstance<T>();
+
+                        var cols = row.Table.Columns;
+                        foreach (DataColumn col in cols)
                         {
-                            if (prop.Name.Equals(col.ColumnName, StringComparison.InvariantCultureIgnoreCase))
+                            var props = temp.GetProperties();
+                            foreach (var prop in props)
                             {
-                                var pValue = row[col.ColumnName];
-                                prop.SetValue(obj, pValue == DBNull.Value ? null : pValue);
-                            }
-                            else
-                            {
-                                continue;
+                                if (prop.Name.Equals(col.ColumnName, StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    var pValue = row[col.ColumnName];
+                                    prop.SetValue(obj, pValue == DBNull.Value ? null : pValue);
+                                }
+                                else
+                                {
+                                    continue;
+                                }
                             }
                         }
-                    }
 
-                    // Add the object to the collection
-                    collection.Add(obj);
+                        // Add the object to the collection
+                        collection.Add(obj);
+                    }
                 }
             }
 
